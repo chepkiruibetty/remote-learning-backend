@@ -25,6 +25,12 @@ class Course(models.Model):
     def __str__(self):
        return self.title
 
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    name = models.CharField(max_length=80, blank=True)
+    status = models.TextField(max_length=254, blank=True)
+    profile_picture = models.ImageField(upload_to='images/', default='default.png')
+
 class Module(models.Model):
     course = models.ForeignKey(Course,related_name='modules',on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
