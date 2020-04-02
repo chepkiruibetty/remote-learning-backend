@@ -21,5 +21,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
     path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
-    path('api/', include('courses.api.urls',namespace='api'))
+    path('course/', include('courses.urls')),
+    path('api/', include('courses.api.urls',namespace='api')),
+    path('api/v1/rest-auth/', include('rest_auth.urls')),
+    path('api/v1/rest-auth/registration/', # new
+    include('rest_auth.registration.urls')),
 ]
