@@ -27,29 +27,46 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CORS_ORIGIN_WHITELIST = (
+     'http://localhost:4200',
+)
 
 # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
     'courses.apps.CoursesConfig',
+    'corsheaders',
     'rest_framework',
+    'rest_auth',
+    'rest_framework.authtoken', 
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+     'allauth.socialaccount',
+    'rest_auth.registration',
 ]
 
 
 REST_FRAMEWORK = {
    
-   'DEFAULT_PERMISSION_CLASSES': ( 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly', ),
-   
+   'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated', ),
+
+   'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication', # new
+],
 }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -63,7 +80,7 @@ ROOT_URLCONF = 'educa.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,3 +144,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+# LOGIN_REDIRECT_URL='home'
+# LOGOUT_REDIRECT_URL='home'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+SITE_ID =1
+CORS_ORIGIN_ALLOW_ALL = True
