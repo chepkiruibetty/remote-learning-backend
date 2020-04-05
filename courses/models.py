@@ -1,7 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe
 
 # Create your models here.
 class Subject(models.Model):
@@ -17,6 +20,9 @@ class Course(models.Model):
     owner = models.ForeignKey(User,related_name='courses_created', on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject,related_name='courses',on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
+    post_date = models.DateTimeField(default=timezone.now)
+    image = models.ImageField(upload_to='courses/')
+    students = models.ManyToManyField(User,related_name='courses_joined',blank=True)
     slug = models.SlugField(max_length=200, unique=True)
     overview = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
@@ -55,6 +61,11 @@ class ItemBase(models.Model):
    title = models.CharField(max_length=250)
    created = models.DateTimeField(auto_now_add=True)
    updated = models.DateTimeField(auto_now=True)
+   def render(self):
+       return render_to_string('courses/content/{}.html'.format(
+              self._meta.model_name), {'item': self})
+
+
 
    class Meta:
     abstract = True
@@ -72,3 +83,4 @@ class Image(ItemBase):
 
  class Video(ItemBase):
   url = models.URLField()
+
