@@ -1,22 +1,152 @@
 {% extends "base.html" %}
-{% block title %}My courses{% endblock %}
+{% block title %}
+{% if subject %}
+{{ subject.title }} courses
+{% else %}
+All courses
+{% endif %}
+{% endblock %}
 {% block content %}
-<h1>My courses</h1>
-<div class="module">
-{% for course in object_list %}
-<div class="course-info">
-<h3>{{ course.title }}</h3>
-<p>
-<a href="{% url "course_edit" course.id %}">Edit</a>
-<a href="{% url "course_delete" course.id %}">Delete</a>
-</p>
+
+<div class="btn1 btn container-fluid" style="background-image: url('https://bit.ly/2UC4W1w')">
+    <style>
+        .btn1 {
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100vh;
+            background-position: center;
+        }
+    </style>
+
+    <div class="header" style="height: 80vh; font-family: 'Encode Sans Expanded', sans-serif;">
+        <div class="container" style="color:white;">
+            <div class="row" style="padding-top:50px;">
+                <div class="col-md-4" style="font-size: 20px;">
+                    <strong><cite>Start creating your online learning site in minutes!</strong></cite>
+                </div>
+                <div class="col-md-4"></div>
+
+            </div>
+            <!-- <div style="text-align:center; font-size: 50px; padding-top:30px;">
+                <p style="font-family: 'Carter One', cursive;" class="blog">WORKS</p>
+            </div>
+            <div style="text-align:center; font-size: 10px;">
+                <p class="" style="font-family: 'Merienda', cursive;">BY <strong style="color:#49c5b6;"
+                        class="mr-3">BettySeron</strong> FROM KENYA WITH <strong class="ml-3">7.35</strong></p>
+            </div> -->
+            <div style="height:230px;">
+
+            </div>
+            <div>
+                <div id="box" class="col-md-4">
+                    <button class="btn"
+                        style=" border-radius: 5em; background-color: #49c5b6; border:none; padding: 2px; width: 80px;"><a
+                            target="blank" style="color: white; text-decoration:none;" href="">Videos</a></button>
+                    <button class="btn"
+                        style="color: white; border-radius: 5em; background-color: transparent; border:1px solid #49c5b6; padding: 2px; width: 80px;">
+                        Files </button>
+                    <button class="btn"
+                        style="color: white; border-radius: 5em; background-color: transparent; border:1px solid white; padding: 2px; width: 80px;">Texts</button>
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-{% empty %}
-<p>You haven't created any courses yet.</p>
+<h1>
+<!-- {% if subject %}
+{{ subject.title }} courses
+{% else %}
+All courses
+{% endif %}
+
+</h1>
+<div class="contents">
+<h3>Subjects</h3>
+<ul id="modules">
+<li {% if not subject %}class="selected"{% endif %}>
+<a href="{% url "course_list" %}">All</a>
+</li>
+{% for s in subjects %}
+<li {% if subject == s %}class="selected"{% endif %}>
+<a href="{% url "course_list_subject" s.slug %}">
+{{ s.title }}
+<br><span>{{ s.total_courses }} courses</span>
+</a>
+</li>
 {% endfor %}
-<p>
-<a href="{% url "course_create" %}" class="button">Create new
-course</a>
-</p>
+</ul>
 </div>
+<div class="module">
+{% for course in courses %}
+{% with subject=course.subject %}
+<h3><a href="{% url "course_detail" course.slug %}">
+{{ course.title }}</a></h3>
+<p>
+<a href="{% url "course_list_subject" subject.slug %}">
+{{ subject }}</a>.
+{{ course.total_modules }} modules.
+Instructor: {{ course.owner.get_full_name }}
+</p>
+{% endwith %}
+{% endfor %}
+</div> -->
+<div class="jumbotron">
+        <div class="container-fluid"
+            style="margin-bottom: 10px;  padding-left:55px; padding-right:55px; font-family: 'Raleway', sans-serif;">
+    
+            <div>
+                <h2 class="text-center text-danger" style="font-family:'Merienda One', cursive;">ALL COURSES</h2>
+            </div>
+            <div class="row">
+                {% for course in courses %}
+                
+                <div class="col-md-3" style="margin-bottom:25px;">
+                    <div id="image" class="hover02 column body">
+                        <figure><a target="blank" href=""><img class="img-responsive"
+                                    src="{{course.image.url }}" width="100%" ; height="200px" ;></a></figure>
+                    </div>
+                    <div class="card-header" style="background-color: white; font-size: 13px; margin-top:0px;">
+                        <p style="font-weight:bold;" class="text-center">{{course.title}}</p>
+                        <p class="size"> Published on:{{course.post_date}}</p>
+                        <div class="module">
+                                <h2>Overview</h2>
+                                <p>
+                                
+                                {{ course.modules.count }} modules.
+                                Instructor: {{ course.owner.get_full_name }}
+                                </p>
+                                {{ object.overview|linebreaks }}
+                                {% if request.user.is_authenticated %}
+                                <div class="module">
+                                        {% for content in module.contents.all %}
+                                        {% with item=content.item %}
+                                        <h2>{{ item.title }}</h2>
+                                        {{ item.render }}
+                                        {% endwith %}
+                                        {% endfor %}
+                                        </div>
+                                        
+                                {% else %}
+                                <a href="{% url "student_registration" %}" class="button">
+                                Register to enroll
+                                </a>
+                                {% endif %}
+                                </div>
+                                
+                    </div>
+                    <div class="card-footer" style="background-color:white;">
+                        <p><cite>By <strong>Instructor: {{ course.owner.get_full_name }}</strong></cite></p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% for course in courses %}
+    
+    {% endfor %}
 {% endblock %}

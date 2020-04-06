@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block styles %}
+{% endblock%}
+{% block content %}
+<link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+
+<div class="btn1 btn container-fluid" style="background-image: url('https://bit.ly/2WeUQ87')">
+    <style>
+        .btn1 {
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+    </style>
+
+    <div class="header" style="height: 80vh; font-family: 'Encode Sans Expanded', sans-serif;">
+        <div class="container" style="color:white;">
+            <div class="row" style="padding-top:50px;">
+                <div class="col-md-4" style="font-size: 20px;">
+                    <strong><cite>Site of the day</strong></cite>
+                </div>
+                <div class="col-md-4"></div>
+
+            </div>
+            <div style="text-align:center; font-size: 50px; padding-top:30px;">
+                <p style="font-family: 'Carter One', cursive;" class="blog">WORKS</p>
+            </div>
+            <div style="text-align:center; font-size: 10px;">
+                <p class="" style="font-family: 'Merienda', cursive;">BY <strong style="color:#49c5b6;"
+                        class="mr-3">BettySeron</strong> FROM KENYA WITH <strong class="ml-3">7.35</strong></p>
+            </div>
+            <div style="height:230px;">
+
+            </div>
+            <div>
+                <div id="box" class="col-md-4">
+                    <button class="btn"
+                        style=" border-radius: 5em; background-color: #49c5b6; border:none; padding: 2px; width: 80px;"><a
+                            target="blank" style="color: white; text-decoration:none;" href="">Visit</a></button>
+                    <button class="btn"
+                        style="color: white; border-radius: 5em; background-color: transparent; border:1px solid #49c5b6; padding: 2px; width: 80px;">
+                        likes </button>
+                    <button class="btn"
+                        style="color: white; border-radius: 5em; background-color: transparent; border:1px solid white; padding: 2px; width: 80px;">Collect</button>
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
